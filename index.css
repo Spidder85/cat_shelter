@@ -1,0 +1,269 @@
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Bellota Text', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+    align-items: center;
+}
+
+/* Стили для шапки */
+header {
+    background-color: rgb(255, 235, 120);
+    text-align: center;
+    padding: 60px 0;
+    width: calc(100% - 76px); /*100%; */
+    max-width: 1362px;
+    height: auto; /* 495px;*/
+    border-radius: 56px;
+    margin: 34 auto;
+    align-items: center;
+}
+
+
+header h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    
+}
+
+.logo-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.logo {
+    position: relative;
+    margin-bottom: 10px;
+    height: auto;
+    width: 188px;
+}
+
+.header-cat {
+    position: absolute;
+    height: 180px;
+    width: auto;
+    bottom: -15px;
+    right: -25px;
+}
+
+.header-title {
+    font-size: 106px;
+    color: black;
+    height: 95px;
+    font-family: "Unbounded", sans-serif;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    line-height: 1.2;
+}
+
+
+
+.main-section {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 3rem;
+}
+
+.cats-table {
+    max-width: 1130px;
+    
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: rgb(207, 229, 216);
+    border-radius: 54px;
+}
+
+.cats-table th, .cats-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.cats-table th {
+    background-color: #b5838d;
+    color: white;
+    font-weight: 700;
+}
+
+.cats-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.cat-image {
+    width: 150px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.about-section {
+    padding: 2rem;
+    border-radius: 8px;
+    width: 786px;
+    align-items: center;
+}
+
+.about-section h2 {
+    color: rgb(159, 203, 177);
+    font-family: "Unbounded", sans-serif;
+    font-size: 56px;
+    height: 59px;
+    font-weight: 500;
+    margin-top: 0;
+    text-align: center;
+}
+
+.steps-list {
+    padding-left: 1.5rem;
+}
+
+.footer {
+    background-color: rgb(223,223,223);
+    border-radius: 56px;
+    padding: 40px 0;
+    max-width: 1360px;
+    width: 100%;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: rgb(253,243,212);
+    margin: 10% auto;
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 600px;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    text-align: left;
+}
+
+.modal-body h1 {
+    font-family: "Unbounded", sans-serif;
+    font-weight: bold;
+}
+
+.modal-cat-image {
+  max-width: 40%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* Make cat names clickable */
+.cat-name {
+  cursor: pointer;
+  color: #0066cc;
+  text-decoration: underline;
+}
+
+ /* стили для кнопок действия */
+.action-button {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #555;
+    transition: color 0.3s;
+}
+
+.action-btn:hover {
+    color: #000;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea 
+{
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.save-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.save-btn:hover {
+    background-color: #45a049;
+}
