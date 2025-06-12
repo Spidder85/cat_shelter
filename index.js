@@ -6,12 +6,15 @@ const DELETE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" wid
 <path fill="currentColor" d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z"></path>
 </svg>`;
 
+
+
+
 // Функция для создания строки в таблице
 function addRow(table, data) {
     let { name, image, age, id, description } = data;
 
     let tr = document.createElement("tr");
-    tr.id = id;
+    tr.id = `cat-${id}`; //id;
 
     let imageTd = document.createElement("td");
     let img = document.createElement("img");
@@ -152,36 +155,51 @@ function getAgeSuffix(age) {
 }
 
 // Получаем таблицу и заполняем её данными
-let table = document.querySelector(".cats-table-body");
-const data = [
-    {
-        id: 1,
-        name: "Фира",
-        favorite: false,
-        rate: 0,
-        age: 3,
-        description: "Фира родилась и выросла на улице дачного поселка, но это никак не сказалось на чудесном характере кошки. Ради человеческого внимания она готова на всё!",
-        image: "imgs/kitty1.png",
-    },
-    {
-        id: 2,
-        name: "Дымок",
-        favorite: false,
-        rate: 0,
-        age: 1,
-        description: "Одно из самых впечатляющих преображений этого года: бывший беспризорник, боец, гроза района Дымок, который совсем недавно был категорически против заточения в помещении и навязанной ему помощи, стал расслабленным, дружелюбным и общительным",
-        image: "imgs/kitty2.png",
-    },
-    {
-        id: 3,
-        name: "Стеша",
-        favorite: false,
-        rate: 0,
-        age: 1,
-        description: "Стеша совсем еще молоденькая, ей 12 месяцев и она очень хочет стать домашней и любимой. Киса очень тянется к человеку, любит забираться на ручки, просит, чтобы её погладили",
-        image: "imgs/kitty3.png",
-    },
-];
+// let table = document.querySelector(".cats-table-body");
+// const data = [
+//     {
+//         id: 1,
+//         name: "Фира",
+//         favorite: false,
+//         rate: 0,
+//         age: 3,
+//         description: "Фира родилась и выросла на улице дачного поселка, но это никак не сказалось на чудесном характере кошки. Ради человеческого внимания она готова на всё!",
+//         image: "imgs/kitty1.png",
+//     },
+//     {
+//         id: 2,
+//         name: "Дымок",
+//         favorite: false,
+//         rate: 0,
+//         age: 1,
+//         description: "Одно из самых впечатляющих преображений этого года: бывший беспризорник, боец, гроза района Дымок, который совсем недавно был категорически против заточения в помещении и навязанной ему помощи, стал расслабленным, дружелюбным и общительным",
+//         image: "imgs/kitty2.png",
+//     },
+//     {
+//         id: 3,
+//         name: "Стеша",
+//         favorite: false,
+//         rate: 0,
+//         age: 1,
+//         description: "Стеша совсем еще молоденькая, ей 12 месяцев и она очень хочет стать домашней и любимой. Киса очень тянется к человеку, любит забираться на ручки, просит, чтобы её погладили",
+//         image: "imgs/kitty3.png",
+//     },
+// ];
+
+let data;
+const login = 'KOZMIN-IYU';
+const xhr = new XMLHttpRequest();
+
+xhr.open("GET", `https://cats.petiteweb.dev/api/single/${login}/show`, true);
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        data = JSON.parse(xhr.responseText);
+        const table = document.querySelector(".cats-table-body");
+        data.forEach((item) => addRow(table, item));
+    }
+};
+xhr.send();
+
 
 // // Заполняем таблицу данными
 // data.forEach((item) => addRow(table, item));
@@ -208,3 +226,51 @@ document.addEventListener("DOMContentLoaded", () => {
     // Заполняем таблицу данными
     data.forEach((item) => addRow(table, item));
 });
+
+function saveItem(db, id, updatedData) {
+  fetch(`/api/single/${db}/update/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedData)
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('Ошибка обновления');
+    return response.json();
+  })
+  .then(() => {
+    // Закрываем модальное окно
+    closeModal();
+
+    // Обновляем таблицу
+    return fetch(`/api/single/${db}/show`);
+  })
+  .then(response => response.json())
+  .then(data => {
+    updateTable(data);
+  })
+  .catch(error => {
+    console.error(error);
+    alert('Не удалось сохранить изменения');
+  });
+}
+
+function updateTable(data) {
+  const tbody = document.querySelector('#petsTable tbody');
+  tbody.innerHTML = '';
+
+  data.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.id}</td>
+      <td>${item.name}</td>
+      <td>${item.age}</td>
+      <td>
+        <button onclick="openEditModal(${item.id})">Редактировать</button>
+        <button onclick="deleteItem('pets', ${item.id})">Удалить</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
